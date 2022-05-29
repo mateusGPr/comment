@@ -31,4 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-.db
+
+### Comment H2 Database ###
+data.comment.mv.db
