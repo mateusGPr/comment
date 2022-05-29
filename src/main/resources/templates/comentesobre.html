@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title th:text="'Comente Sobre - ' + ${subject}" />
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h2 th:text="'Comente Sobre: ' + ${subject} + '!'" />
+    <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
+        <div class="comment" th:each="comment : ${comments}">
+            <strong th:text="${comment.email}" />
+            <p th:text="${comment.text}" />
+        </div>
+    </div>
+
+    <div id="new">
+        <form method="POST" action="/api">
+            <input type="hidden" name="subject" th:value="${subject}" />
+            <input type="text" id="mail" name="email" placeholder="Digite seu email..." />
+            <textarea id="content" name="text" placeholder="Deixe seu comentário..."></textarea>
+            <span id="btn">
+                <button>Postar</button>
+            </span>
+        </form>
+    </div>
+    <!-- <script src="./script.js"></script> -->
+</body>
