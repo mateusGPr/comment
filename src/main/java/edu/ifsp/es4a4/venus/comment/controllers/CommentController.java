@@ -20,7 +20,11 @@ public class CommentController {
 	@Autowired
 	private CommentRepository commentRepository;
 
-	@GetMapping(value = "/{subject:[^\\.\"api\"]*}") // (value = {"/{subject:^(?!.)}"})
+	@GetMapping("/")
+	public String home() {
+		return "home";
+	}
+	@GetMapping(value = "/{subject:[^\\.]*}") // (value = {"/{subject:^(?!.)}"})
 	public String greeting(@PathVariable String subject, Model model) {
 		model.addAttribute("subject", subject);
 		Subject subjectObj = subjectRepository.findByName(subject);
@@ -39,34 +43,46 @@ public class CommentController {
 		return "comentesobre";
 	}
 
-	@PostMapping(value = "/api")
+	@PostMapping(value = "/api.post")
 	public String api(PostForm form) {
+		String subject = form.getSubject();
+		try {
+			if (subject == null)
+				throw new Exception("subject nulo.");
 
-		Subject subjectObj = subjectRepository.findByName(form.getSubject());
+			Subject subjectObj = subjectRepository.findByName(form.getSubject());
 
-		if (subjectObj == null) {
-			subjectObj = new Subject();
+			if (subjectObj == null) {
+				subjectObj = new Subject();
 
-			subjectObj.setName(form.getSubject());
+				subjectObj.setName(form.getSubject());
+			}
+
+			if (!(form.getEmail().equals("new") && form.getText().equals("new"))) {
+				Comment newComment = new Comment();
+
+				newComment.setEmail(form.getEmail());
+				newComment.setText(form.getText());
+				newComment.setSubject(subjectObj);
+
+				subjectObj.addComments(newComment);
+
+				commentRepository.save(newComment);
+			}
+
+			subjectRepository.save(subjectObj);
+		} catch (Exception e) {
+			System.err.println("Exception: " + e.getLocalizedMessage());
+			subject = "";
 		}
 
-		Comment newComment = new Comment();
+		/*
+		 * System.err.println(form.getSubject());
+		 * System.err.println(form.getEmail());
+		 * System.err.println(form.getText());
+		 */
 
-		newComment.setEmail(form.getEmail());
-		newComment.setText(form.getText());
-		newComment.setSubject(subjectObj);
-
-		subjectObj.addComments(newComment);
-
-		commentRepository.save(newComment);
-
-		subjectRepository.save(subjectObj);
-
-		/*System.err.println(form.getSubject());
-		System.err.println(form.getEmail());
-		System.err.println(form.getText());*/
-
-		return "redirect:/" + form.getSubject();
+		return "redirect:/" + subject;
 	}
 
 }
