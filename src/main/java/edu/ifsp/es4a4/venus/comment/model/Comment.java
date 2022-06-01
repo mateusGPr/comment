@@ -1,48 +1,63 @@
 package edu.ifsp.es4a4.venus.comment.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.GeneratedValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
-    @Id @GeneratedValue
-    private Long id;
-
-    @Column(length = 255)
-    @Size(min = 0, max = 255)
-    @NotNull @NotBlank
+public class Comment extends BaseEntity {
+    /*
+     * @Id
+     * 
+     * @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+     * "comment_generator")
+     * private Long id;
+     * 
+     * public Long getId() {
+     * return id;
+     * }
+     * 
+     * public void setId(final Long id) {
+     * this.id = id;
+     * }
+     * 
+     * public boolean isNew() {
+     * return this.id == null;
+     * }
+     */
+    @Column(name = "text")
+    @NotEmpty
+    @Lob
     private String text;
 
-    @Email @NotNull @NotBlank
+    @Column(name = "email")
+    @NotEmpty
+    @Email
     private String email;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL/* , fetch = FetchType.EAGER */)
+    @JoinColumn(name = "subject_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Subject subject;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void setSubject(final Subject subject) {
         this.subject = subject;
     }
 
@@ -50,7 +65,7 @@ public class Comment {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -58,7 +73,7 @@ public class Comment {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 }

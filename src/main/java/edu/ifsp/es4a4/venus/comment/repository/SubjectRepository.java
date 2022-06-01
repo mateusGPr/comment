@@ -8,6 +8,8 @@ import edu.ifsp.es4a4.venus.comment.model.Subject;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
-    @Query(value = "SELECT * FROM subject WHERE name = ?1", nativeQuery = true)
+    public static final String SELECT_SUBJECT_WHERE_NAME = "SELECT subject FROM Subject subject WHERE subject.name =:name";
+
+    @Query(value = SELECT_SUBJECT_WHERE_NAME)
     Subject findByName(String name);
 }
