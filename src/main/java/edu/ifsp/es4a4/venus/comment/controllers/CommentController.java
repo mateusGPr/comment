@@ -24,6 +24,7 @@ public class CommentController {
 	public String home() {
 		return "home";
 	}
+
 	@GetMapping(value = "/{subject:[^\\.]*}") // (value = {"/{subject:^(?!.)}"})
 	public String greeting(@PathVariable String subject, Model model) {
 		model.addAttribute("subject", subject);
@@ -39,11 +40,11 @@ public class CommentController {
 			subjectObj = subjectRepository.findByName(subject);
 		}
 
-		model.addAttribute("comments", subjectObj.getComments());
+		model.addAttribute("comments", commentRepository.findBySubject(subjectObj.getId()));
 		return "comentesobre";
 	}
 
-	@PostMapping(value = "/api.post")
+	@PostMapping(value = "/api")
 	public String api(PostForm form) {
 		String subject = form.getSubject();
 		try {
@@ -56,21 +57,24 @@ public class CommentController {
 				subjectObj = new Subject();
 
 				subjectObj.setName(form.getSubject());
+				System.err.println("Criado");
 			}
+
+			subjectRepository.save(subjectObj);
 
 			if (!(form.getEmail().equals("new") && form.getText().equals("new"))) {
 				Comment newComment = new Comment();
 
+				subjectObj = subjectRepository.findByName(form.getSubject());
+				if(subjectObj == null) {
+					System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$Erro");
+				}
 				newComment.setEmail(form.getEmail());
 				newComment.setText(form.getText());
 				newComment.setSubject(subjectObj);
-
-				subjectObj.addComments(newComment);
-
 				commentRepository.save(newComment);
 			}
 
-			subjectRepository.save(subjectObj);
 		} catch (Exception e) {
 			System.err.println("Exception: " + e.getLocalizedMessage());
 			subject = "";
