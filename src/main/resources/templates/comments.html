@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .card {
+            background-color: #fff;
+            border-radius: .25rem;
+            border-bottom: 2px solid #ff007f;
+            box-shadow: 0 .5em 1em -.125em rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .02);
+            color: #4a4a4a;
+            max-width: 98%;
+            margin: auto;
+            position: relative;
+        }
+
+        .card-header {
+            align-items: center;
+            color: #363636;
+            display: flex;
+            flex-grow: 1;
+            font-weight: 700;
+            padding: .1rem 1rem;
+            background-color: transparent;
+            align-items: stretch;
+            box-shadow: 0 .125em .25em rgba(10, 10, 10, .1);
+            display: flex;
+        }
+
+        .card-header:first-child {
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+        }
+
+        .card-footer {
+            background-color: transparent;
+            border-top: 1px solid #ededed;
+            align-items: right;
+            display: flex;
+        }
+
+        .card-footer-item {
+            align-items: center;
+            display: flex;
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+            justify-content: center;
+            padding: .2rem;
+        }
+
+        .card-content {
+            background-color: transparent;
+            padding: .5rem;
+        }
+
+        button {
+            font-weight: 700;
+            outline: none;
+            border: none;
+            background-color: #ff007f;
+            color: white;
+            padding: .5rem;
+            border-radius: 2px;
+            transition: all 200ms linear;
+        }
+
+        button:hover {
+            background-color: #ff62b1;
+        }
+
+        button:active {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <strong class="card-header">
+        </strong>
+        <p class="card-content">
+        </p>
+        <div class="card-footer">
+            <div class="card-footer-item">
+                <button type="submit">Comentar!</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
