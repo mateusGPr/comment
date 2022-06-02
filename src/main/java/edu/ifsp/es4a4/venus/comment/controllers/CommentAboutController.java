@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import edu.ifsp.es4a4.venus.comment.model.Comment;
+import edu.ifsp.es4a4.venus.comment.model.PostForm;
 import edu.ifsp.es4a4.venus.comment.model.Subject;
 import edu.ifsp.es4a4.venus.comment.repository.CommentRepository;
 import edu.ifsp.es4a4.venus.comment.repository.SubjectRepository;
@@ -26,7 +27,7 @@ public class CommentAboutController {
 	}
 
 	@GetMapping(value = "/{subject}") // (value = {"/{subject:^(?!.)}"})
-	public String greeting(@PathVariable String subject, Model model) {
+	public String getSubject(@PathVariable String subject, Model model) {
 		model.addAttribute("subject", subject);
 		Subject subjectObj = subjectRepository.findByName(subject);
 
