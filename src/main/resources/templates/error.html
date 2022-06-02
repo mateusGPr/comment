@@ -6,22 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comente Sobre - Erro</title>
-    <link href="/style.css" rel="stylesheet" type="text/css" />
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <div>
-        <h2>Comente Sobre</h2>
-    </div>
-    <h1>Ocorreu um erro, tente comentar sobre algo...</h1>
-    <div id="pathToGo">
-        <form method="POST" action="/api.post">
+    <header>
+        <h1>Comente Sobre</h1>
+    </header>
+
+    <h2>Ocorreu um erro, tente comentar sobre algo...</h2>
+
+    <form class="card" method="POST" action="/api.post" onsubmit="return validate(event);">
+        <div class="card-header">
             <input type="text" name="subject" placeholder="Comente sobre..." />
-            <input type="hidden" name="email" value="new" />
-            <input type="hidden" name="text" value="new" />
-            <button>Comentar!</button>
-        </form>
-    </div>
+        </div>
+        <input type="hidden" name="email" value="" />
+        <input type="hidden" name="text" value="" />
+        <div class="card-footer">
+            <div class="card-footer-item">
+                <button>Comentar!</button>
+            </div>
+        </div>
+    </form>
 </body>
 
 </html>

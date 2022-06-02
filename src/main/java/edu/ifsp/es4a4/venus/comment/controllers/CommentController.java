@@ -1,92 +1,98 @@
 package edu.ifsp.es4a4.venus.comment.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import edu.ifsp.es4a4.venus.comment.model.Comment;
 import edu.ifsp.es4a4.venus.comment.model.Subject;
 import edu.ifsp.es4a4.venus.comment.repository.CommentRepository;
 import edu.ifsp.es4a4.venus.comment.repository.SubjectRepository;
 
-@Controller
+@RestController
+@RequestMapping("/api.rest")
 public class CommentController {
-	@Autowired
-	private SubjectRepository subjectRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
-	@Autowired
-	private CommentRepository commentRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
 
-	@GetMapping("/")
-	public String home() {
-		return "home";
-	}
+    @GetMapping("/comments")
+    public ResponseEntity<List<Comment>> getAllComments(@RequestParam(required = false) Long id) {
+        List<Comment> comments;
 
-	@GetMapping(value = "/{subject:[^\\.]*}") // (value = {"/{subject:^(?!.)}"})
-	public String greeting(@PathVariable String subject, Model model) {
-		model.addAttribute("subject", subject);
-		Subject subjectObj = subjectRepository.findByName(subject);
+        if (id == null) {
+            comments = new ArrayList<Comment>();
+            commentRepository.findAll().forEach(comments::add);
+        } else
+            comments = commentRepository.findBySubject(id);
 
-		if (subjectObj == null) {
-			Subject newSubject = new Subject();
+        if (comments.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(comments, HttpStatus.OK);
+    }
 
-			newSubject.setName(subject);
-			subjectRepository.save(newSubject);
+    @GetMapping("/comments/{id}")
+    public ResponseEntity<Comment> getCommentById(@PathVariable("id") long id) {
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found comment with id = " + id));
+        return new ResponseEntity<>(comment, HttpStatus.OK);
+    }
 
-			// Isto é correto? Ou é só atribuir subjectObj = newSubject
-			subjectObj = subjectRepository.findByName(subject);
-		}
+    @PostMapping("/comments/{name}")
+    public ResponseEntity<Comment> createComment(@PathVariable("name") String name, @RequestBody Comment comment) {
+        Subject subject = subjectRepository.findByName(name);
 
-		model.addAttribute("comments", commentRepository.findBySubject(subjectObj.getId()));
-		return "comentesobre";
-	}
+        if (subject == null) {
+            subject = subjectRepository.save(new Subject(name));
 
-	@PostMapping(value = "/api")
-	public String api(PostForm form) {
-		String subject = form.getSubject();
-		try {
-			if (subject == null)
-				throw new Exception("subject nulo.");
+            if (subject == null) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        Comment _comment = commentRepository
+                .save(new Comment(comment.getEmail(), comment.getText(), subject));
+        return new ResponseEntity<>(_comment, HttpStatus.CREATED);
+    }
 
-			Subject subjectObj = subjectRepository.findByName(form.getSubject());
+    @PutMapping("/comments/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable("id") long id, @RequestBody Comment comment) {
+        Comment _comment = commentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found comment with id = " + id));
+        _comment.setEmail(comment.getEmail());
 
-			if (subjectObj == null) {
-				subjectObj = new Subject();
+        return new ResponseEntity<>(commentRepository.save(_comment), HttpStatus.OK);
+    }
 
-				subjectObj.setName(form.getSubject());
-				System.err.println("Criado");
-			}
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<HttpStatus> deleteComment(@PathVariable("id") long id) {
+        commentRepository.deleteById(id);
 
-			subjectRepository.save(subjectObj);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-			if (!(form.getEmail().equals("new") && form.getText().equals("new"))) {
-				Comment newComment = new Comment();
+    /*
+     * Somente em desenvolvimento
+     * TODO: Deletar ou comentar
+     */
+    @DeleteMapping("/comments")
+    public ResponseEntity<HttpStatus> deleteAllComments() {
+        commentRepository.deleteAll();
 
-				subjectObj = subjectRepository.findByName(form.getSubject());
-				if(subjectObj == null) {
-					System.err.println("$$$$$$$$$$$$$$$$$$$$$$$$Erro");
-				}
-				newComment.setEmail(form.getEmail());
-				newComment.setText(form.getText());
-				newComment.setSubject(subjectObj);
-				commentRepository.save(newComment);
-			}
-
-		} catch (Exception e) {
-			System.err.println("Exception: " + e.getLocalizedMessage());
-			subject = "";
-		}
-
-		/*
-		 * System.err.println(form.getSubject());
-		 * System.err.println(form.getEmail());
-		 * System.err.println(form.getText());
-		 */
-
-		return "redirect:/" + subject;
-	}
-
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -5,27 +5,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title th:text="'Comente Sobre - ' + ${subject}" />
-    <link href="./style.css" rel="stylesheet" type="text/css" />
+    <link href="./css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <h2 th:text="'Comente Sobre: ' + ${subject} + '!'" />
-    <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
-        <div class="comment" th:each="comment : ${comments}">
-            <strong th:text="${comment.email}" />
-            <p th:text="${comment.text}" />
+    <header>
+        <h1 th:text="'Comente Sobre: ' + ${subject} + '!'" />
+    </header>
+    <main>
+        <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
+            <div class="card" th:each="comment : ${comments}">
+                <strong class="card-header" th:text="${comment.email}" />
+                <p class="card-content" th:text="${comment.text}" />
+            </div>
         </div>
-    </div>
 
-    <div id="new">
-        <form method="POST" action="/api">
-            <input type="hidden" name="subject" th:value="${subject}" />
-            <input type="text" id="mail" name="email" placeholder="Digite seu email..." />
-            <textarea id="content" name="text" placeholder="Deixe seu comentário..."></textarea>
-            <span id="btn">
-                <button>Postar</button>
-            </span>
-        </form>
-    </div>
-    <!-- <script src="./script.js"></script> -->
+        <div id="new">
+            <form class="card" method="POST" action="/api.post" onsubmit="return validate(event);">
+                <input type="hidden" name="subject" th:value="${subject}" />
+                <div class="card-header">
+                    <input type="text" id="email" name="email" placeholder="Digite seu email..." />
+                </div>
+                <div class="card-content">
+                    <textarea id="content" name="text" placeholder="Deixe seu comentário..."></textarea>
+                </div>
+                <div class="card-footer">
+                    <div class="card-footer-item">
+                        <button>Postar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>Trabalho de ES4A4</p>
+    </footer>
+    <script src="./js/script.js"></script>
 </body>

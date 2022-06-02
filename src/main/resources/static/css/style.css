@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Martel:wght@700&display=swap');
+
+body {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h1{
+    color: #ff007f;
+    font-size: 2rem;
+    text-align: center;
+}
+
+footer{
+    font-size: 0.7rem;
+    text-align: center;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: .25rem;
+    border-bottom: 2px solid #ff007f;
+    box-shadow: 0 .5em 1em -.125em rgba(10, 10, 10, .1), 0 0 0 1px rgba(10, 10, 10, .02);
+    color: #4a4a4a;
+    max-width: 100%;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.card-header {
+    align-items: center;
+    color: #363636;
+    display: flex;
+    flex-grow: 1;
+    font-weight: 700;
+    padding: .5rem 1rem;
+    background-color: transparent;
+    align-items: stretch;
+    box-shadow: 0 .125em .25em rgba(10, 10, 10, .1);
+    display: flex;
+}
+
+.card-header:first-child {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.card-footer {
+    background-color: transparent;
+    border-top: 1px solid #ededed;
+    align-items: right;
+    display: flex;
+}
+
+.card-footer-item {
+    align-items: center;
+    display: flex;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: .2rem;
+}
+
+.card-content {
+    background-color: transparent;
+    padding: 0.5rem 1.5rem;
+}
+
+button {
+    font-weight: 700;
+    outline: none;
+    border: none;
+    background-color: #ff007f;
+    color: white;
+    padding: .5rem;
+    border-radius: 2px;
+    transition: all 200ms linear;
+}
+
+button:hover {
+    background-color: #ff62b1;
+}
+
+button:active {
+    background-color: black;
+}
+
+form textarea {
+    color: #333;
+    width: 100%;
+}
+
+form input {
+    width: 100%;
+    border: none;
+    font-weight: inherit;
+    color: inherit;
+    font-size: inherit;
+    font: inherit;
+}
+
+form input:focus, form textarea {
+    border: none;
+    outline: none;
+    resize: none;
+}
