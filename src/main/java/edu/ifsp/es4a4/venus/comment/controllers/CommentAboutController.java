@@ -32,7 +32,8 @@ public class CommentAboutController {
 	}
 
 	@GetMapping(value = "/{subject}") // (value = {"/{subject:^(?!.)}"})
-	public String getSubject(@PathVariable String subject, Model model) {
+	public String getSubject(@PathVariable String _subject, Model model) {
+		String subject = _subject.toLowerCase();
 		model.addAttribute("subject", subject);
 		Subject subjectObj = subjectRepository.findByName(subject);
 
@@ -51,7 +52,7 @@ public class CommentAboutController {
 
 	@PostMapping(value = "/api.post")
 	public String api(PostForm form) {
-		String subject = form.getSubject();
+		String subject = form.getSubject().toLowerCase();
 		try {
 			if (subject == null)
 				throw new Exception("commentAboutController subject nulo.");
