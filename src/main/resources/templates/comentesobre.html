@@ -1,45 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title th:text="'Comente Sobre - ' + ${subject}" />
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  <title>
+    Comente Sobre!
+  </title>
+  <meta charset="UTF-8" />
+
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+  <link rel="stylesheet" href="/styles/style.css?v=1654463600358" />
+
+  <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
+
 </head>
 
-<body>
-    <header>
-        <h1 th:text="'Comente Sobre: ' + ${subject} + '!'" />
-    </header>
-    <main>
-        <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
-            <div class="card" th:each="comment : ${comments}">
-                <strong class="card-header" th:text="${comment.email}" />
-                <p class="card-content" th:text="${comment.text}" />
+<body class="bg-pink-300">
+  <header th:replace="fragments/header.html :: header-comment"> </header>
+
+  <div class="w-11/12 p-1 mx-auto min-h-screen">
+    <header th:replace="fragments/comment.html :: number-comment"> </header>
+
+    <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
+      <div th:each="comment : ${comments}"
+        class="my-4 mx-3 w-fit flex gap-3 rounded-md bg-white p-2 text-black shadow-lg">
+        <!-- Photo -->
+        <div class="mt-2">
+          <img class="w-56 shadow rounded-full"
+            th:src="'https://avatars.dicebear.com/api/bottts/' + ${comment.email} + '.svg?r=50'" srcset="" />
+        </div>
+        <!-- Content -->
+        <div>
+          <!-- Header -->
+          <div class="flex items-center justify-between py-1 pr-2">
+            <!-- Author -->
+            <div>
+              <a href="#" class="text-pink-500 hover:underline" th:text="${comment.email}"></a>
+              <span class="text-sm font-thin text-gray-500" th:text="${comment.created}"></span>
             </div>
+          </div>
+          <!-- Context -->
+          <div class="p-1">
+            <p class="text-gray-900 border-l-2 px-1 border-pink-500 bg-pink-200 rounded" th:text="${comment.text}"></p>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div id="new">
-            <form class="card" method="POST" action="/api.post" onsubmit="return validate(event);">
-                <input type="hidden" name="subject" th:value="${subject}" />
-                <div class="card-header">
-                    <input type="text" id="email" name="email" placeholder="Digite seu email..." />
-                </div>
-                <div class="card-content">
-                    <textarea id="content" name="text" placeholder="Deixe seu comentário..."></textarea>
-                </div>
-                <div class="card-footer">
-                    <div class="card-footer-item">
-                        <button>Postar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </main>
+  <script type="text/javascript" src="./js/script.js"></script>
 
-    <footer>
-        <p>Trabalho de ES4A4</p>
-    </footer>
-    <script src="./js/script.js"></script>
 </body>
+
+</html>

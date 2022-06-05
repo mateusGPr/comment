@@ -48,6 +48,12 @@ public class SubjectControler {
 
         return new ResponseEntity<>(subject, HttpStatus.OK);
     }
+    @GetMapping("/subjects/last10")
+    public ResponseEntity<List<Subject>> getLast10Subject() {
+        List<Subject> subjects = subjectRepository.findTop10ByOrderByCreatedDesc();
+
+        return new ResponseEntity<>(subjects, HttpStatus.OK);
+    }
 
     @PostMapping("/subjects")
     public ResponseEntity<Subject> createSubject(@RequestBody Subject subject) {

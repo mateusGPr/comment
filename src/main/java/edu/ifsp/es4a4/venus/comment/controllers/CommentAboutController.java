@@ -1,5 +1,7 @@
 package edu.ifsp.es4a4.venus.comment.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,10 @@ public class CommentAboutController {
 	private CommentRepository commentRepository;
 
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model) {
+		List<Comment> comments = commentRepository.findTop10ByOrderByCreatedDesc();
+
+		model.addAttribute("comments", comments);
 		return "home";
 	}
 

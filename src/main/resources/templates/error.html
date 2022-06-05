@@ -2,32 +2,24 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comente Sobre - Erro</title>
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    <title>
+        Comente Sobre!
+    </title>
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+    <link rel="stylesheet" href="/styles/style.css?v=1654463600358" />
+
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
+
 </head>
 
-<body>
-    <header>
-        <h1>Comente Sobre</h1>
-    </header>
+<body class="bg-pink-300">
+    <header th:replace="fragments/home-header.html :: header-comment"> </header>
 
-    <h2>Ocorreu um erro, tente comentar sobre algo...</h2>
-
-    <form class="card" method="POST" action="/api.post" onsubmit="return validate(event);">
-        <div class="card-header">
-            <input type="text" name="subject" placeholder="Comente sobre..." />
-        </div>
-        <input type="hidden" name="email" value="" />
-        <input type="hidden" name="text" value="" />
-        <div class="card-footer">
-            <div class="card-footer-item">
-                <button>Comentar!</button>
-            </div>
-        </div>
-    </form>
+    <h2 class="mx-3 mt-8 text-white text-2xl text-center"><i class="mx-3 lni lni-sad"></i> Ocorreu um errro!<br>Tente comentar sobre outro assunto...</h2>
+    <script type="text/javascript"  th:src="@{~/js/script.js}" src="./js/script.js"></script>
 </body>
 
 </html>

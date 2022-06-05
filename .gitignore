@@ -34,3 +34,4 @@ build/
 
 ### Comment H2 Database ###
 data.comment.mv.db
+data.comment.trace.db
