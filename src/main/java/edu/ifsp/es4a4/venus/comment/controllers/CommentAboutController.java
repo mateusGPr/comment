@@ -31,19 +31,14 @@ public class CommentAboutController {
 		return "home";
 	}
 
-	@GetMapping(value = "/{subject}") // (value = {"/{subject:^(?!.)}"})
+	@GetMapping(value = "/{_subject}") // (value = {"/{subject:^(?!.)}"})
 	public String getSubject(@PathVariable String _subject, Model model) {
 		String subject = _subject.toLowerCase();
 		model.addAttribute("subject", subject);
 		Subject subjectObj = subjectRepository.findByName(subject);
 
 		if (subjectObj == null) {
-			Subject newSubject = new Subject(subject);
-
-			subjectRepository.save(newSubject);
-
-			// Isto é correto? Ou é só atribuir subjectObj = newSubject
-			subjectObj = subjectRepository.findByName(subject);
+			subjectObj = subjectRepository.save(new Subject(subject));
 		}
 
 		model.addAttribute("comments", commentRepository.findBySubject(subjectObj.getId()));
