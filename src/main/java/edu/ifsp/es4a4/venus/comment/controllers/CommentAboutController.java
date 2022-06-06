@@ -47,15 +47,17 @@ public class CommentAboutController {
 
 	@PostMapping(value = "/api.post")
 	public String api(PostForm form) {
-		String subject = form.getSubject().toLowerCase();
+		String subject;
 		try {
-			if (subject == null)
-				throw new Exception("commentAboutController subject nulo.");
+			if (form.getSubject() == null)
+				throw new Exception("commentAboutController subject null.");
 
-			Subject subjectObj = subjectRepository.findByName(form.getSubject());
+			subject = form.getSubject().toLowerCase();
+			
+			Subject subjectObj = subjectRepository.findByName(subject);
 
 			if (subjectObj == null) {
-				subjectObj = subjectRepository.save(new Subject(form.getSubject()));
+				subjectObj = subjectRepository.save(new Subject(subject));
 			}
 
 			if ((form.getEmail().length() > 0) && (form.getText().length() > 0)) {
