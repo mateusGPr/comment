@@ -54,7 +54,8 @@ public class CommentController {
     }
 
     @PostMapping("/comments/{name}")
-    public ResponseEntity<Comment> createComment(@PathVariable("name") String name, @RequestBody Comment comment) {
+    public ResponseEntity<Comment> createComment(@PathVariable("name") String _name, @RequestBody Comment comment) {
+        String name = _name.toLowerCase();
         Subject subject = subjectRepository.findByName(name);
 
         if (subject == null) {

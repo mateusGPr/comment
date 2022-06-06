@@ -1,0 +1,26 @@
+<header th:fragment="header-comment">
+    <div class="bg-pink-600 mx-auto flex flex-col items-center text-gray-800 p-4 shadow max-w-full">
+        <button class="p-2 rounded text-center text-2xl text-white" onclick="toggleForm();"><img src="/img/comment.png"
+                class="inline w-10 mr-1" alt="" />Comente sobre<br /><i class="lni lni-angle-double-down block"></i>
+        </button>
+        <form id="form" class="hidden bg-white mt-6 flex flex-col p-3 rounded w-6/12" method="POST" action="/api.post"
+            onsubmit="return validate(event);">
+            <input id="subject" type="hidden" name="subject" th:value="${subject}" />
+            <input id="email" name="email" class="bg-white border border-pink-300 rounded p-2 mb-4 outline-none"
+                spellcheck="false" placeholder="Email" type="text">
+            <textarea id="content" class="bg-pink-200 p-3 border-l-2 px-1 border-pink-500 outline-none rounded"
+                spellcheck="true" name="text" placeholder="Comente sobre, aqui..."></textarea>
+            <!-- buttons -->
+            <div class="flex justify-end mt-2">
+                <button type="button" onclick="toggleForm();"
+                    class="px-4 py-1 mx-1 float-right text-sm text-indigo-600 font-semibold rounded border border-indigo-200 hover:text-white
+            hover:bg-indigo-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2">
+                    <i class="mr-1 lni lni-trash-can"></i>Calcelar</button>
+                <button type="submit" text="Comentar"
+                    class="px-4 py-1 mx-1 float-right text-sm text-pink-600 font-semibold rounded border border-pink-200 hover:text-white
+            hover:bg-pink-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2">
+                    <i class="mr-1 lni lni-comments-reply"></i>Comentar</button>
+            </div>
+        </form>
+    </div>
+</header>

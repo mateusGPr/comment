@@ -47,8 +47,9 @@ const Validator = {
 function validate(event) {
     const email = document.getElementById("email");
     const text = document.getElementById("content");
+    const subject = document.getElementById("subject")
 
-    if (Validator.email(email.value) || text.value.length == 0) {
+    if (Validator.email(email.value) || text.value.length == 0 || subject.value.length == 0) {
         alert("Por favor, preencha os campos com dados válidos!");
         event.preventDefault();
         return false;
@@ -57,4 +58,18 @@ function validate(event) {
 }
 // TODO
 const PutComments = {
+}
+
+const form = document.getElementById("form")
+const mail = document.getElementById("email")
+const text = document.getElementById("content")
+const subject = document.getElementById("subject")
+
+function toggleForm() {
+    form.classList.toggle("hidden")
+    if(subject.type == "text") {
+        subject.value = ''
+    }
+    mail.value = ''
+    text.value = ''
 }

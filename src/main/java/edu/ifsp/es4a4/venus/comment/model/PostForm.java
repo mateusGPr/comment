@@ -1,4 +1,4 @@
-package edu.ifsp.es4a4.venus.comment.controllers;
+package edu.ifsp.es4a4.venus.comment.model;
 
 public class PostForm {
     private String subject;

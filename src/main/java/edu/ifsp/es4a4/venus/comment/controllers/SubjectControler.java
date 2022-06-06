@@ -32,7 +32,7 @@ public class SubjectControler {
         if (name == null)
             subjectRepository.findAll().forEach(subjects::add);
         else
-            subjects.add(subjectRepository.findByName(name));
+            subjects.add(subjectRepository.findByName(name.toLowerCase()));
 
         if (subjects.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -48,11 +48,17 @@ public class SubjectControler {
 
         return new ResponseEntity<>(subject, HttpStatus.OK);
     }
+    @GetMapping("/subjects/last10")
+    public ResponseEntity<List<Subject>> getLast10Subject() {
+        List<Subject> subjects = subjectRepository.findTop10ByOrderByCreatedDesc();
+
+        return new ResponseEntity<>(subjects, HttpStatus.OK);
+    }
 
     @PostMapping("/subjects")
     public ResponseEntity<Subject> createSubject(@RequestBody Subject subject) {
         Subject _subject = subjectRepository
-                .save(new Subject(subject.getName()));
+                .save(new Subject(subject.getName().toLowerCase()));
 
         return new ResponseEntity<>(_subject, HttpStatus.CREATED);
     }
@@ -61,7 +67,7 @@ public class SubjectControler {
     public ResponseEntity<Subject> updateSubject(@PathVariable("id") long id, @RequestBody Subject subject) {
         Subject _subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found subject with id = " + id));
-        _subject.setName(subject.getName());
+        _subject.setName(subject.getName().toLowerCase());
 
         return new ResponseEntity<>(subjectRepository.save(_subject), HttpStatus.OK);
     }

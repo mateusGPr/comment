@@ -2,30 +2,59 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comente Sobre</title>
-    <link href="./css/style.css" rel="stylesheet" type="text/css" />
+    <title>
+        Comente Sobre!
+    </title>
+    <meta charset="UTF-8" />
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+    <link rel="stylesheet" href="/styles/style.css?v=1654463600358" />
+
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet" />
+
 </head>
 
-<body>
-    <div>
-        <h1>Comente Sobre</h1>
-    </div>
-    <form class="card" method="POST" action="/api.post" onsubmit="return validate(event);">
-        <div class="card-header">
-            <input type="text" name="subject" placeholder="Comente sobre..." />
-        </div>
-        <input type="hidden" name="email" value="" />
-        <input type="hidden" name="text" value="" />
-        <div class="card-footer">
-            <div class="card-footer-item">
-                <button>Comentar!</button>
+<body class="bg-pink-300">
+    <header th:replace="fragments/home-header.html :: header-comment"> </header>
+
+    <div class="w-11/12 p-1 mx-auto min-h-screen">
+        <div th:fragment="number-comment" class="mx-3 mt-8 text-pink-600 text-xl border-b-2 border-pink-200"
+          ><i class="mr-1 lni lni-list"></i><span th:text="'Últimos comentários (' + ${#lists.size(comments)} + ')'"></span></div>
+
+        <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
+            <div th:each="comment : ${comments}"
+                class="my-4 mx-3 w-fit flex gap-3 rounded-md bg-white p-2 text-black shadow-lg">
+                <!-- Photo -->
+                <div class="mt-2">
+                    <img class="w-56 shadow rounded-full"
+                        th:src="'https://avatars.dicebear.com/api/bottts/' + ${comment.email} + '.svg?r=50'"
+                        srcset="" />
+                </div>
+                <!-- Content -->
+                <div>
+                    <!-- Header -->
+                    <div class="flex items-center justify-between py-1 pr-2">
+                        <!-- Author -->
+                        <div>
+                            <a href="/" class="text-pink-500 hover:underline"><i class="lni lni-comments"></i></a>
+                            <span class="text-pink-500 hover:underline">/</span>
+                            <a th:href="'/' + ${comment.subject.name}" class="text-pink-500 hover:underline" th:text="${comment.subject.name}"></a>
+                            <span class="text-pink-500 hover:underline">/</span>
+                            <a th:href="'mailto:/' + ${comment.email}" class="text-pink-500 hover:underline" th:text="${comment.email}"></a>
+                            <span class="text-sm font-thin text-gray-500" th:text="${comment.created}"></span>
+                        </div>
+                    </div>
+                    <!-- Context -->
+                    <div class="p-1">
+                        <p class="text-gray-900 border-l-2 px-1 border-pink-500 bg-pink-200 rounded"
+                            th:text="${comment.text}"></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
-    <script type="text/javascript" src="./js/script.js"></script>
+    </div>
+    <script type="text/javascript"  th:src="@{~/js/script.js}" src="./js/script.js"></script>
 </body>
 
 </html>
