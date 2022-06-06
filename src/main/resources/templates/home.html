@@ -20,7 +20,7 @@
 
     <div class="w-11/12 p-1 mx-auto min-h-screen">
         <div th:fragment="number-comment" class="mx-3 mt-8 text-pink-600 text-xl border-b-2 border-pink-200"
-          th:text="'Últimos comentários (' + ${#lists.size(comments)} + ')'"></div>
+          ><i class="mr-1 lni lni-list"></i><span th:text="'Últimos comentários (' + ${#lists.size(comments)} + ')'"></span></div>
 
         <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
             <div th:each="comment : ${comments}"
@@ -37,6 +37,8 @@
                     <div class="flex items-center justify-between py-1 pr-2">
                         <!-- Author -->
                         <div>
+                            <a href="/" class="text-pink-500 hover:underline"><i class="lni lni-comments"></i></a>
+                            <span class="text-pink-500 hover:underline">/</span>
                             <a th:href="'/' + ${comment.subject.name}" class="text-pink-500 hover:underline" th:text="${comment.subject.name}"></a>
                             <span class="text-pink-500 hover:underline">/</span>
                             <a th:href="'mailto:/' + ${comment.email}" class="text-pink-500 hover:underline" th:text="${comment.email}"></a>

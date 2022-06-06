@@ -35,7 +35,11 @@
           <div class="flex items-center justify-between py-1 pr-2">
             <!-- Author -->
             <div>
-              <a href="#" class="text-pink-500 hover:underline" th:text="${comment.email}"></a>
+              <a href="/" class="text-pink-500 hover:underline"><i class="lni lni-comments"></i></a>
+              <span class="text-pink-500 hover:underline">/</span>
+              <a th:href="'/' + ${subject}" class="text-pink-500 hover:underline" th:text="${subject}"></a>
+              <span class="text-pink-500 hover:underline">/</span>
+              <a th:href="'mailto:/' + ${comment.email}" class="text-pink-500 hover:underline" th:text="${comment.email}"></a>
               <span class="text-sm font-thin text-gray-500" th:text="${comment.created}"></span>
             </div>
           </div>
