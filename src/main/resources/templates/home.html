@@ -19,7 +19,7 @@
     <header th:replace="fragments/home-header.html :: header-comment"> </header>
 
     <div class="w-11/12 p-1 mx-auto min-h-screen">
-        <div th:fragment="number-comment" class="mx-3 mt-8 text-pink-600 text-xl border-b-2 border-pink-200"
+        <div th:fragment="number-comment" class="mx-3 mt-8 text-white text-xl border-b-2 border-pink-200"
           ><i class="mr-1 lni lni-list"></i><span th:text="'Últimos comentários (' + ${#lists.size(comments)} + ')'"></span></div>
 
         <div id="comments" th:if="${ not #lists.isEmpty(comments) }">
