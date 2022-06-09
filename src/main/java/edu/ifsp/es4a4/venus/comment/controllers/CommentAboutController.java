@@ -52,10 +52,10 @@ public class CommentAboutController {
 			if (subject == null)
 				throw new Exception("commentAboutController subject nulo.");
 
-			Subject subjectObj = subjectRepository.findByName(form.getSubject());
+			Subject subjectObj = subjectRepository.findByName(subject);
 
 			if (subjectObj == null) {
-				subjectObj = subjectRepository.save(new Subject(form.getSubject()));
+				subjectObj = subjectRepository.save(new Subject(subject));
 			}
 
 			if ((form.getEmail().length() > 0) && (form.getText().length() > 0)) {
